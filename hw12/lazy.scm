@@ -18,7 +18,7 @@
 ;;**implementation-dependent loading of evaluator file
 ;;Note: It is loaded first so that the section 4.2 definition
 ;; of eval overrides the definition from 4.1.1
-(load "~cs61as/lib/mceval.scm")
+(load "mceval.scm")
 
 
 ;;  To run without memoization, reload the first version of force-it below
