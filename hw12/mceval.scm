@@ -1,3 +1,5 @@
+(define (let? exp) (tagged-list? exp 'let))
+
 ;;;;METACIRCULAR EVALUATOR FROM CHAPTER 4 (SECTIONS 4.1.1-4.1.4) of
 ;;;; STRUCTURE AND INTERPRETATION OF COMPUTER PROGRAMS
 

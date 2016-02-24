@@ -36,9 +36,36 @@
         ((lambda? exp) (analyze-lambda exp))
         ((begin? exp) (analyze-sequence (begin-actions exp)))
         ((cond? exp) (analyze (cond->if exp)))
+        ((let? exp) (analyze-let exp))
         ((application? exp) (analyze-application exp))
         (else
          (error "Unknown expression type -- ANALYZE" exp))))
+
+; SICP 4.22
+; helper to analyze let
+(define (get-clause exp) (cdr exp))
+(define (let-variables exp)
+  (if (null? exp)
+      '()
+      (cons (caar exp) (let-variables (cdr exp)))))
+
+(define (let-body exp) (cdr exp))
+
+(define (let-exp exp)
+  (if (null? exp)
+      '()
+      (cons (cadar exp) (let-exp (cdr exp)))))
+
+(define (let->combination exp)
+  (cons
+    (make-lambda (let-variables (car (get-clause exp)))
+                 (let-body (get-clause exp)))
+    (let-exp (car (get-clause exp)))))
+
+(define (analyze-let exp)
+  (analyze (let->combination exp)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (analyze-self-evaluating exp)
   (lambda (env) exp))
