@@ -1,0 +1,5 @@
+(load "obj.scm")
+(load "tables.scm")
+(load "adv-copy.scm")
+(load "adv-world-copy.scm")
+(load "q1.scm")

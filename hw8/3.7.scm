@@ -1,0 +1,43 @@
+#lang planet neil/sicp
+(define (make-account balance pw)
+  (define wrong-pw-count 0)
+  (define (withdraw amount)
+    (if (>= balance amount)
+        (begin (set! balance (- balance amount))
+               balance)
+        "Insufficient funds"))
+  (define (deposit amount)
+    (set! balance (+ balance amount))
+    balance)
+  (define (response w)
+        "wrong password")
+  (define (call-police w) "call-police")
+  (define (dispatch password m)
+    (if (eq? password pw)
+        (cond ((eq? m 'withdraw) withdraw)
+          ((eq? m 'deposit) deposit)
+          (else (error "Unknown request -- MAKE-ACCOUNT"
+                       m)))
+        (begin (set! wrong-pw-count (+ 1 wrong-pw-count))
+               response)
+    )
+  )
+  dispatch)
+
+(define (make-joint account public-pw private-pw)
+  (lambda (key action) 
+          (if (eq? key private-pw)
+              (account public-pw action)
+              (account 'wrong-password action)
+          )
+  )
+)
+
+
+
+(define peter-acc (make-account 100 'open-sesame))
+((peter-acc 'open-sesame 'withdraw) 40)
+
+(define paul-acc (make-joint peter-acc 'open-sesame 'rosebud))
+((paul-acc 'rosebud 'withdraw) 40)
+((paul-acc 'roseb 'deposit) 100)
