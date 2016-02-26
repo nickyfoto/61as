@@ -242,4 +242,4 @@
       (last-pair (cdr lst)) ))
 
 
-(load "~cs61as/lib/serial.scm")
+(load "serial.scm")
